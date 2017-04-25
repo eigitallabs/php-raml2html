@@ -10,7 +10,7 @@ $RAMLactionVerbs = array('get', 'post', 'put', 'patch', 'delete', 'connect', 'tr
 $cacheTimeLimit = '60';
 
 // Path to the theme file for the docs
-$docsTheme = 'templates/grey/index.phtml';
+$docsTheme = 'templates/epaisa/index.phtml';
 
 // Enable Try It (alpha)
 $tryIt = false;

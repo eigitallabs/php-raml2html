@@ -8,7 +8,7 @@
   * @license http://www.gnu.org/licenses/gpl-2.0.html GPL v2
   */
 
-namespace RAML2HTML;  
+namespace RAML2HTML;
 
  /**
   * RAML Class
@@ -503,20 +503,20 @@ class RAML extends RAMLDataObject
 	public function pingStatus($url = 'default', $headers = array(), $expire = 300, $notifyEmail = false)
 	{
 		global $cacheTimeLimit;
-		
+
 		if ($url == 'default') {
 			$url = $this->get('baseUri');
 		}
-		
+
 		$status = false;
 		if ($cacheTimeLimit && function_exists('apc_fetch')) {
 			$status = apc_fetch('RAMLStatus' . md5($url));
 		}
-		
+
 		if ($status) {
 			return $status;
 		}
-		
+
 		// Insert CURL with Optional Headers
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -525,20 +525,20 @@ class RAML extends RAMLDataObject
 		$output = curl_exec($ch);
 		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
-		
+
 		$status = 'offline';
 		if (substr($http_status, 0, 1) == '2') {
 			$status = 'online';
 		}
-		
+
 		if ($notifyEmail && $status == 'offline') {
 			mail($notifyEmail, $this->title . ' API is Down!', 'The server at ' . $url . ' failed to be queried successfully.', 'FROM: ' . $notifyEmail);
 		}
-		
+
 		if ($cacheTimeLimit && function_exists('apc_store')) {
 			apc_store('RAMLStatus' . md5($url), $status, $cacheTimeLimit);
 		}
-		
+
 		return $status;
 	}
 

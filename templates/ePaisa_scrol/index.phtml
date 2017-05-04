@@ -1,0 +1,1544 @@
+<?php $codeSamples = new RAML2HTML\codeSamples($RAML);  error_reporting(0);?>
+
+<?php 
+
+    function GetBetween($var1="",$var2="",$pool){
+                  $temp1 = strpos($pool,$var1)+strlen($var1);
+                  $result = substr($pool,$temp1,strlen($pool));
+                  $dd=strpos($result,$var2);
+                  if($dd == 0){
+                  $dd = strlen($result);
+                  }
+
+                  return substr($result,0,$dd);
+                  }              
+
+    
+
+    $main_cats = array();
+    $same_item = "undefined";
+
+    $full_cats = $RAML->getChildPaths('/');
+    sort($full_cats);
+    $count_full_cats = count($full_cats);
+    
+
+    /* Create array ($main_cats) with all main categories */
+
+    for ($i = 0; $i < $count_full_cats; $i++)
+    {
+         $menu_item = GetBetween("/","/", $full_cats[$i]);
+
+        $main_cats[$menu_item][] = $full_cats[$i];    
+    }
+    /* Create array ($main_cats) with all main categories ends here*/
+                    
+
+            
+           ?> 
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title><?php echo $RAML->title; ?> </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="www.agonxheladini.com">
+  <link rel="stylesheet" href="templates/ePaisa_scrol/css/uikit.css">
+  <link rel="stylesheet" href="templates/ePaisa_scrol/css/custom.css">
+  <link rel="stylesheet" href="templates/ePaisa_scrol/highlight/styles/monokai-sublime.css">
+  <script type="text/javascript" src="templates/ePaisa_scrol/js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="templates/ePaisa_scrol/js/custom.js"></script>
+  <script type="text/javascript" src="templates/ePaisa_scrol/js/uikit.min.js"></script>
+  <script type="text/javascript" src="templates/ePaisa_scrol/js/uikit-icons.min.js"></script>
+  <script type="text/javascript" src="templates/ePaisa_scrol/js/jquery.scrollNav.js"></script>
+  <script type="text/javascript" src="templates/ePaisa_scrol/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="//cdn.jsdelivr.net/jquery.scrollto/2.1.2/jquery.scrollTo.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div id="mobil_menu">
+  <div class="logo_part">
+     <a href="<?php echo $_SERVER['PHP_SELF']; ?>">
+          <img src="templates/ePaisa_scrol/images/ePaisa_logo.png" style="height: 60px !important;">
+     </a>
+  </div>
+  <div class="menu_part">
+    <select id="mobile_menu_select">
+              <optgroup label="INTRODUCTION">
+                  <option value="introduction">Introduction</option>
+              </optgroup>
+              <optgroup label="TOPICS">
+                  <option value="authentication">Authentication</option>
+                  <option value="handlingerrors">Handling errors</option>
+                  <option value="expandingobjects">Expanding Objects</option>
+                  <option value="metadata">Metadata</option>
+                  <option value="paginations">Pagination</option>
+                  <option value="requestids">Request IDs</option>
+                  <option value="versioning">Versioning</option>
+              </optgroup>
+              <?php 
+                foreach($main_cats as $cat => $subcats) {
+                   echo "<optgroup label='".$cat."'>";
+             
+                    foreach($subcats as $sub_cat => $sub_cat_val)
+                    {
+                      
+                      $sub_cats_final = str_replace('/', '', $sub_cat_val);
+                      echo "<option value='".$sub_cats_final."'>".$sub_cat_val."</option>";
+                    
+                    }
+
+                 echo "</optgroup>";
+                 }
+
+              ?> 
+    </select>
+  </div>
+</div>
+  <div id="left_part">
+       <header class="header">
+           <div class="logo" style="padding: 10px 0 12px 0; margin-right: 37px;">
+            <a href="<?php echo $_SERVER['PHP_SELF']; ?>">
+             <img src="templates/ePaisa_scrol/images/ePaisa_logo.png">
+            </a>
+      </header>
+      <div id="menu_holder">
+        <?php  include('_menu.phtml');?>
+      </div>
+  </div>
+  <div id="right_content">
+  
+    <div  id="main-content">
+
+     <!-- Manual Page 1 starts here --> 
+       <div class='endpoint_holder post__article endpoint_introduction' id='introduction'>
+        <div class='left_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">API Reference</h3>
+              </div>
+
+              <p>The ePaisa API is organized around <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer" target="_blank">REST</a>. Our API has predictable, resource-oriented URLs, and uses HTTP response codes to indicate API errors. We use built-in HTTP features, like HTTP authentication and HTTP verbs, which are understood by off-the-shelf HTTP clients. We support <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing" target="_blank">cross-origin resource sharing</a>, allowing you to interact securely with our API from a client-side web application (though you should never expose your secret API key in any public website's client-side code). <a href="http://www.json.org/" target="_blank">JSON</a> is returned by all API responses, including errors, although our <a href="#acquirerbank">API libraries</a> convert responses to appropriate language-specific objects </p>
+
+              <p>To make the API as explorable as possible, accounts have test mode and live mode API keys. There is no "switch" for changing between modes, just use the appropriate key to perform a live or test transaction. Requests made with test mode credentials never hit the banking networks and incur no cost.</p>
+
+            </div>
+        </div>
+        <div class='right_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet">API libraries</h5>
+              </div>
+              <p>Official libraries for the ePaisa API are <a href="#">available in several languages.</a></p>
+              <p>Community-supported libraries are also <a href="#">available for additional languages.</a></p>
+              
+              <div class="uk-tile uk-tile-muted uk-padding-remove" style="margin-top: 22px;">
+                <h5 class="uk-heading-bullet" style="margin-bottom:20px !important;">API Endpoint</h5>
+              </div>
+                <ul class="code_sample_holder">
+                  <pre><code class='php hljs'>"https://nine.epaisa.com"</code></pre>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Manual Page 1 ends here --> 
+
+    <!-- Manual Page 2 starts here --> 
+       <div class='endpoint_holder post__article endpoint_authentication' id='authentication'>
+        <div class='left_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">Authentication</h3>
+              </div>
+
+              <p>Authenticate your account when using the API by including your secret API key in the request. You can manage your API keys in the Dashboard. Your API keys carry many privileges, so be sure to keep them secret! Do not share your secret API keys in publicly accessible areas such GitHub, client-side code, and so forth.</p>
+
+              <p>Authentication to the API is performed via HTTP Basic Auth. Provide your API key as the basic auth username value. You do not need to provide a password.</p>
+
+              <p>If you need to authenticate via bearer auth (e.g., for a cross-origin request), use:</p>
+
+              <div class="uk-placeholder" style="color: #b93d6a !important; text-align: left;">
+              <span style="width: 100% !important; text-align: left;">-H "Authorization: Bearer sk_test_BQokikJOvBiI2HlWgH4olfQ2"</span></div>
+              <p>instead of:</p>
+
+              <div class="uk-placeholder" style="color: #b93d6a !important; text-align: left;">
+              <span style="width: 100% !important; text-align: left;">-u sk_test_BQokikJOvBiI2HlWgH4olfQ2:</span></div>
+
+
+            </div>
+        </div>
+        <div class='right_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet">Example Request</h5>
+              </div>
+                <ul class="code_sample_holder">
+                  <pre><code class='php hljs'>$curl https://api.stripe.com/v1/charges \
+   -u sk_test_BQokikJOvBiI2HlWgH4olfQ2:</code></pre>
+                </ul>
+               <p></p>
+              <p>curl uses the -u flag to pass basic auth credentials (adding a colon after your API key prevents cURL from asking for a password).</a></p>
+              <br><br>
+              <p>A sample test API key is included in all the examples on this page, so you can test any example right away. To test requests using your account, replace the sample API key with your actual API key.</a></p>
+
+            </div>
+        </div>
+    </div>
+    <!-- Manual Page 2 ends here --> 
+    <!-- Manual Page 3 starts here --> 
+       <div class='endpoint_holder post__article endpoint_handlingerrors' id='handlingerrors'>
+        <div class='left_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">Errors</h3>
+              </div>
+              <p>Stripe uses conventional HTTP response codes to indicate the success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.), and codes in the 5xx range indicate an error with Stripe's servers (these are rare).</p>
+              <p>Not all errors map cleanly onto HTTP response codes, however. When a request is valid but does not complete successfully (e.g., a card is declined), we return a 402 error code. To understand why a card is declined, refer to the list of codes in the documentation.</p>
+
+                    <table class="uk-table uk-table-divider">
+                          <thead>
+                              <tr>
+                                  <th>ATTRIBUTES</th>
+                                  <th></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td align="right">type</td>
+                                  <td>
+                                    <p>The type of error returned. Can be:</p>
+                                    <div class="uk-placeholder" style="color: #b93d6a !important; text-align: left;">
+                      <span style="width: 100% !important; text-align: left;"><p>api_connection_error, api_error, authentication_error, card_error, invalid_request_error,</p></span></div>
+                      <p>or</p>
+                      <div class="uk-placeholder" style="color: #b93d6a !important; text-align: left;">
+                      <span style="width: 100% !important; text-align: left;"><p>rate_limit_error.</p></span></div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="right">charge</td>
+                                  <td><p>The ID of the failed charge.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right"><p style="margin-bottom: 5px;">message</p><p style="color:#cccccc; margin-top: 5px !important;">optional</p></td>
+                                  <td><p>A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right"><p style="margin-bottom: 5px;">code</p><p style="color:#cccccc; margin-top: 5px !important;">optional</p></td>
+                                  <td><p>For card errors, a short string from amongst those listed on the right describing the kind of card error that occurred.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right"><p style="margin-bottom: 5px;">decline_code</p><p style="color:#cccccc; margin-top: 5px !important;">optiona</p></td>
+                                  <td><p>For card errors resulting from a bank decline, a short string indicating the bank's reason for the decline if they provide one.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right"><p style="margin-bottom: 5px;">message</p><p style="color:#cccccc; margin-top: 5px !important;">param</p></td>
+                                  <td><p>The parameter the error relates to if the error is parameter-specific. You can use this to display a message near the correct form field, for example.</p></td>
+                              </tr>
+                          </tbody>
+                   </table>
+
+                   <div class="uk-tile uk-tile-muted uk-padding-remove">
+                      <h3 class="uk-heading-bullet">Handling errors</h3>
+                  </div>
+                  <p> 
+Our API libraries raise exceptions for many reasons, such as a failed charge, invalid parameters, authentication errors, and network unavailability. We recommend writing code that gracefully handles all possible API exceptions.
+                  </p>
+
+
+            </div>
+        </div>
+        <div class='right_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet" style="margin-bottom: 5px !important;">HTTP status code summary</h5>
+              </div>
+               <table class="uk-table uk-table-striped error_table">
+                <tbody>
+                    <tr>
+                        <td><p><b>200 - OK</b></p></td>
+                        <td><p>Everything worked as expected.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>400 - Bad Request</b></p></td>
+                        <td><p>The request was unacceptable, often due to missing a required parameter.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>401 - Unauthorized</b></p></td>
+                        <td><p>No valid API key provided.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>402 - Request Failed</b></p></td>
+                        <td><p>The parameters were valid but the request failed.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>404 - Not Found</b></p></td>
+                        <td><p>The requested resource doesn't exist.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>409 - Conflict</b></p></td>
+                        <td><p>The request conflicts with another request (perhaps due to using the same idempotent key).</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>429 - Too Many Requests</b></p></td>
+                        <td><p>Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>500, 502, 503, 504 - Server Errors</b></p></td>
+                        <td><p>Something went wrong on Stripe's end. (These are rare.)</p></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="uk-tile uk-tile-muted uk-padding-remove" style="margin-top: 35px !important; margin-bottom: 5px !important;">
+                  <h5 class="uk-heading-bullet" style="margin-bottom: 5px !important;">Errors</h5>
+              </div>
+             <table class="uk-table uk-table-striped error_table">
+                 <thead>
+                  <tr>
+                      <th>TYPES</th>
+                      <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><p><b>api_connection_error</b></p></td>
+                        <td><p>Everything worked as expected.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>api_error</b></p></td>
+                        <td><p>API errors cover any other type of problem (e.g., a temporary problem with Stripe's servers) and are extremely uncommon.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>authentication_error</b></p></td>
+                        <td><p>Failure to properly authenticate yourself in the request.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>card_error</b></p></td>
+                        <td><p>Card errors are the most common type of error you should expect to handle. They result when the user enters a card that can't be charged for some reason.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>invalid_request_error</b></p></td>
+                        <td><p>Invalid request errors arise when your request has invalid parameters.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>rate_limit_error</b></p></td>
+                        <td><p>Too many requests hit the API too quickly.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>validation_error</b></p></td>
+                        <td><p>Errors triggered by our client-side libraries when failing to validate fields (e.g., when a card number or expiration date is invalid or incomplete).</p></td>
+                    </tr>
+                </tbody>
+            </table>
+
+             <table class="uk-table uk-table-striped error_table" style="margin-bottom: 25px;">
+                 <thead>
+                  <tr>
+                      <th>CODES</th>
+                      <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><p><b>invalid_number</b></p></td>
+                        <td><p>The card number is not a valid credit card number.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>invalid_expiry_month</b></p></td>
+                        <td><p>The card's expiration month is invalid.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>invalid_expiry_year</b></p></td>
+                        <td><p>The card's expiration year is invalid.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>invalid_cvc</b></p></td>
+                        <td><p>The card's security code is invalid.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>invalid_swipe_data</b></p></td>
+                        <td><p>The card's swipe data is invalid.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>incorrect_number</b></p></td>
+                        <td><p>The card number is incorrect.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>expired_card</b></p></td>
+                        <td><p>The card has expired..</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>incorrect_cvc</b></p></td>
+                        <td><p>The card's security code is incorrect.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>incorrect_zip</b></p></td>
+                        <td><p>The card's zip code failed validation.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>card_declined</b></p></td>
+                        <td><p>The card was declined.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>missing</b></p></td>
+                        <td><p>There is no card on a customer that is being charged.</p></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>processing_error</b></p></td>
+                        <td><p>An error occurred while processing the card.</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p>CVC validation and zip validation can be enabled/disabled in your <a href="">settings</a>.</p></td>
+                    </tr>
+                </tbody>
+            </table>
+
+          </div>
+        </div>
+    </div>
+    <!-- Manual Page 3 ends here -->  
+
+    <!-- Manual Page 4 starts here --> 
+       <div class='endpoint_holder post__article endpoint_authentication' id='expandingobjects'>
+        <div class='left_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">Expanding Objects</h3>
+              </div>
+
+              <p>Many objects contain the ID of a related object in their response properties. For example, a Charge may have an associated Customer ID. Those objects can be expanded inline with the expand request parameter. Objects that can be expanded are noted in this documentation. This parameter is available on all API requests, and applies to the response of that request only.</p>
+
+              <p>You can nest expand requests with the dot property. For example, requesting invoice.customer on a charge will expand the invoice property into a full Invoice object, and will then expand the customer property on that invoice into a full Customer object.</p>
+
+              <p>You can expand multiple objects at once by identifying multiple items in the expand array.</p>
+
+
+            </div>
+        </div>
+        <div class='right_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet">Example Request</h5>
+              </div>
+
+               <ul class="uk-subnav uk-subnav-pill" uk-switcher>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Javascript</a></li>
+                  <li><a href="#">Rails</a></li>
+               </ul>
+               <ul class="uk-switcher uk-margin">
+                <li>
+                    <pre><code class="php hljs">\Stripe\Stripe::setApiKey("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+
+\Stripe\Charge::retrieve(array(
+  "id" => "ch_1AFo3k2eZvKYlo2CHByOKSMv",
+  "expand" => array("customer")));
+                       </code></pre>
+                </li>
+                <li>
+                   <pre><code class="php hljs">var stripe = require("stripe")(
+  "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+);
+
+stripe.charges.retrieve("ch_1AFo3k2eZvKYlo2CHByOKSMv", {
+  expand: ["customer"]
+});</code></pre>
+                </li>
+                <li>
+                  <pre><code class="php hljs">require "stripe"
+Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
+Stripe::Charge.retrieve({ :id => "ch_1AFo3k2eZvKYlo2CHByOKSMv", :expand => ['customer'] })
+                       </code></pre>
+                </li>
+               </ul>
+              
+            </div>
+        </div>
+    </div>
+    <!-- Manual Page 5 ends here --> 
+
+    <!-- Manual Page 5 starts here --> 
+       <div class='endpoint_holder post__article endpoint_idempotentrequests' id='idempotentrequests'>
+        <div class='left_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">Idempotent Requests</h3>
+              </div>
+
+              <p>The API supports idempotency for safely retrying requests without accidentally performing the same operation twice. For example, if a request to create a charge fails due to a network connection error, you can retry the request with the same idempotency key to guarantee that only a single charge is created.</p>
+
+          <p>To perform an idempotent request, provide an additional idempotency_key element to the request parameters.</p>
+
+              <p>How you create unique keys is completely up to you. We suggest using random strings or UUIDs. We'll always send back the same response for requests made with the same key. However, you cannot use the same key with different request parameters. The keys expire after 24 hours.</p>
+
+
+            </div>
+        </div>
+        <div class='right_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet">Example Request</h5>
+              </div>
+
+               <ul class="uk-subnav uk-subnav-pill" uk-switcher>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Javascript</a></li>
+                  <li><a href="#">Rails</a></li>
+               </ul>
+               <ul class="uk-switcher uk-margin">
+                <li>
+                    <pre><code class="php hljs">\ePaisa\ePaisa::setApiKey("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+
+\ePaisa\Charge::create(array(
+  "amount" => 2000,
+  "currency" => "usd",
+  "source" => "tok_189gCt2eZvKYlo2CyeJ2nRXL", // obtained with Stripe.js
+  "description" => "Charge for mason.smith@example.com"
+), array(
+  "idempotency_key" => "ZDjdD8DppFDSGuap",
+));
+                       </code></pre>
+                </li>
+                <li>
+                   <pre><code class="php hljs">var stripe = require("stripe")(
+  "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+);
+
+stripe.charges.create({
+  amount: 2000,
+  currency: "usd",
+  source: "tok_189gCt2eZvKYlo2CyeJ2nRXL", // obtained with Stripe.js
+  description: "Charge for william.taylor@example.com"
+}, {
+  idempotency_key: "Jr0AmjZyFkJpIMDG"
+}, function(err, charge) {
+  // asynchronously called
+});</code></pre>
+                </li>
+                <li>
+                  <pre><code class="php hljs">require "stripe"
+Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
+Stripe::Charge.create({
+  :amount => 2000,
+  :currency => "usd",
+  :source => "tok_189gCt2eZvKYlo2CyeJ2nRXL", # obtained with Stripe.js
+  :description => "Charge for william.taylor@example.com"
+}, {
+  :idempotency_key => "g4HqM5dMRde2O3Fj"
+})
+                       </code></pre>
+                </li>
+               </ul>
+              
+            </div>
+        </div>
+    </div>
+    <!-- Manual Page 5 ends here -->
+
+    <!-- Manual Page 6 starts here --> 
+       <div class='endpoint_holder post__article endpoint_metadata' id='metadata'>
+        <div class='left_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">Metadata</h3>
+              </div>
+
+              <p>Metadata is useful for storing additional, structured information on an object. As an example, you could store your user's full name and corresponding unique identifier from your system on a Stripe Customer object. Metadata is not used by Stripe (e.g., to authorize or decline a charge), and won't be seen by your users unless you choose to show it to them.</p>
+
+          <p>Some of the objects listed above also support a description parameter. You can use the description parameter to annotate a charge, for example, with a human-readable description, such as "2 shirts for test@example.com". Unlike metadata, description is a single string, and your users may see it (e.g., in email receipts Stripe sends on your behalf).</p>
+
+              <p>Note: You can have up to 20 keys, with key names up to 40 characters long and values up to 500 characters long.</p>
+
+             <table class="uk-table uk-table-divider">
+                          <thead>
+                              <tr>
+                                  <th colspan="2">SAMPLE METADATA USE CASES</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              
+                              <tr>
+                                  <td align="right">Link IDs</td>
+                                  <td><p>Attach your system's unique IDs to a Stripe object for easy lookups. Add your order number to a charge, your user ID to a customer or recipient, or a unique receipt number to a transfer, for example.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right"><p style="margin-bottom: 5px;">Refund papertrails</p></td>
+                                  <td><p> Store information about why a refund was created, and by whom.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right"><p style="margin-bottom: 5px;">Customer details</p></td>
+                                  <td><p>Annotate a customer by storing the customer's phone number for your later use.</p></td>
+                              </tr>
+                          </tbody>
+                   </table>
+            </div>
+        </div>
+        <div class='right_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet">Example Request</h5>
+              </div>
+
+               <ul class="uk-subnav uk-subnav-pill" uk-switcher>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Javascript</a></li>
+                  <li><a href="#">Rails</a></li>
+               </ul>
+               <ul class="uk-switcher uk-margin">
+                <li>
+                    <pre><code class="php hljs">\Stripe\Stripe::setApiKey("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+
+\Stripe\Charge::create(array(
+  "amount" => 2000,
+  "currency" => "usd",
+  "source" => "tok_189gCt2eZvKYlo2CyeJ2nRXL", // obtained with Stripe.js
+  "metadata" => array("order_id" => "6735")
+));
+                       </code></pre>
+                </li>
+                <li>
+                   <pre><code class="php hljs">var stripe = require("stripe")(
+  "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+);
+
+stripe.charges.create({
+  amount: 2000,
+  currency: "usd",
+  source: "tok_189gCt2eZvKYlo2CyeJ2nRXL", // obtained with Stripe.js
+  metadata: {'order_id': '6735'}
+});</code></pre>
+                </li>
+                <li>
+                  <pre><code class="php hljs">require "stripe"
+Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
+Stripe::Charge.create(
+  :amount => 2000,
+  :currency => "usd",
+  :source => "tok_189gCt2eZvKYlo2CyeJ2nRXL", # obtained with Stripe.js
+  :metadata => {'order_id' => '6735'}
+)
+                       </code></pre>
+                </li>
+               </ul>
+
+               <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet">Example Request</h5>
+              </div>
+
+               <ul class="uk-subnav uk-subnav-pill" uk-switcher>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Javascript</a></li>
+                  <li><a href="#">Rails</a></li>
+               </ul>
+               <ul class="uk-switcher uk-margin">
+                <li>
+                    <pre><code class="php hljs">Stripe\Charge JSON: {
+  "id": "ch_1AFpST2eZvKYlo2CfQWTs70x",
+  "object": "charge",
+  "amount": 5500,
+  "amount_refunded": 0,
+  "application": null,
+  "application_fee": null,
+  "balance_transaction": "txn_1AFpST2eZvKYlo2CKQU486tp",
+  "captured": true,
+  "created": 1493925469,
+  "currency": "usd",
+  "customer": "cus_Ab1VXWTaNBsvtN",
+  "description": "Charge for There Virtual Care consultation for Patient1 A'T",
+  "destination": null,
+  "dispute": null,
+  "failure_code": null,
+  "failure_message": null,
+  "fraud_details": {
+  },
+  "invoice": null,
+  "livemode": false,
+  "metadata": {
+    "order_id": "6735"
+  },
+  "on_behalf_of": null,
+  "order": null,
+  "outcome": {
+    "network_status": "approved_by_network",
+    "reason": null,
+    "risk_level": "normal",
+    "seller_message": "Payment complete.",
+    "type": "authorized"
+  },
+  "paid": true,
+  "receipt_email": null,
+  "receipt_number": null,
+  "refunded": false,
+  "refunds": {
+    "object": "list",
+    "data": [
+
+    ],
+    "has_more": false,
+    "total_count": 0,
+    "url": "/v1/charges/ch_1AFpST2eZvKYlo2CfQWTs70x/refunds"
+  },
+  "review": null,
+  "shipping": null,
+  "source": {
+    "id": "card_1AFpSS2eZvKYlo2CEWflR3El",
+    "object": "card",
+    "address_city": null,
+    "address_country": null,
+    "address_line1": null,
+    "address_line1_check": null,
+    "address_line2": null,
+    "address_state": null,
+    "address_zip": null,
+    "address_zip_check": null,
+    "brand": "Visa",
+    "country": "US",
+    "customer": "cus_Ab1VXWTaNBsvtN",
+    "cvc_check": "pass",
+    "dynamic_last4": null,
+    "exp_month": 2,
+    "exp_year": 2022,
+    "fingerprint": "Xt5EWLLDS7FJjR1c",
+    "funding": "credit",
+    "last4": "4242",
+    "metadata": {
+    },
+    "name": null,
+    "tokenization_method": null
+  },
+  "source_transfer": null,
+  "statement_descriptor": null,
+  "status": "succeeded",
+  "transfer_group": null
+}
+                       </code></pre>
+                </li>
+                <li>
+                   <pre><code class="javascript hljs">{
+  "id": "ch_1AFpSp2eZvKYlo2CbjUM3DDB",
+  "object": "charge",
+  "amount": 999,
+  "amount_refunded": 0,
+  "application": null,
+  "application_fee": null,
+  "balance_transaction": "txn_1AFpSp2eZvKYlo2CBzixTAWY",
+  "captured": true,
+  "created": 1493925491,
+  "currency": "usd",
+  "customer": "cus_8Zt5p6jpFOe6wL",
+  "description": null,
+  "destination": null,
+  "dispute": null,
+  "failure_code": null,
+  "failure_message": null,
+  "fraud_details": {
+  },
+  "invoice": "in_1AFoVe2eZvKYlo2CdYcvOGDB",
+  "livemode": false,
+  "metadata": {
+    "order_id": "6735"
+  },
+  "on_behalf_of": null,
+  "order": null,
+  "outcome": {
+    "network_status": "approved_by_network",
+    "reason": null,
+    "risk_level": "normal",
+    "seller_message": "Payment complete.",
+    "type": "authorized"
+  },
+  "paid": true,
+  "receipt_email": null,
+  "receipt_number": null,
+  "refunded": false,
+  "refunds": {
+    "object": "list",
+    "data": [
+
+    ],
+    "has_more": false,
+    "total_count": 0,
+    "url": "/v1/charges/ch_1AFpSp2eZvKYlo2CbjUM3DDB/refunds"
+  },
+  "review": null,
+  "shipping": null,
+  "source": {
+    "id": "card_18IjIt2eZvKYlo2Cjy5zdx5B",
+    "object": "card",
+    "address_city": null,
+    "address_country": null,
+    "address_line1": null,
+    "address_line1_check": null,
+    "address_line2": null,
+    "address_state": null,
+    "address_zip": null,
+    "address_zip_check": null,
+    "brand": "Visa",
+    "country": "US",
+    "customer": "cus_8Zt5p6jpFOe6wL",
+    "cvc_check": null,
+    "dynamic_last4": null,
+    "exp_month": 12,
+    "exp_year": 2017,
+    "fingerprint": "Xt5EWLLDS7FJjR1c",
+    "funding": "credit",
+    "last4": "4242",
+    "metadata": {
+    },
+    "name": null,
+    "tokenization_method": null
+  },
+  "source_transfer": null,
+  "statement_descriptor": null,
+  "status": "succeeded",
+  "transfer_group": null
+}</code></pre>
+                </li>
+                <li>
+                  <pre><code class="php hljs">#<Stripe::Charge id=ch_1AFpSp2eZvKYlo2CbjUM3DDB 0x00000a> JSON: {
+  "id": "ch_1AFpSp2eZvKYlo2CbjUM3DDB",
+  "object": "charge",
+  "amount": 999,
+  "amount_refunded": 0,
+  "application": null,
+  "application_fee": null,
+  "balance_transaction": "txn_1AFpSp2eZvKYlo2CBzixTAWY",
+  "captured": true,
+  "created": 1493925491,
+  "currency": "usd",
+  "customer": "cus_8Zt5p6jpFOe6wL",
+  "description": null,
+  "destination": null,
+  "dispute": null,
+  "failure_code": null,
+  "failure_message": null,
+  "fraud_details": {
+  },
+  "invoice": "in_1AFoVe2eZvKYlo2CdYcvOGDB",
+  "livemode": false,
+  "metadata": {
+    "order_id": "6735"
+  },
+  "on_behalf_of": null,
+  "order": null,
+  "outcome": {
+    "network_status": "approved_by_network",
+    "reason": null,
+    "risk_level": "normal",
+    "seller_message": "Payment complete.",
+    "type": "authorized"
+  },
+  "paid": true,
+  "receipt_email": null,
+  "receipt_number": null,
+  "refunded": false,
+  "refunds": {
+    "object": "list",
+    "data": [
+
+    ],
+    "has_more": false,
+    "total_count": 0,
+    "url": "/v1/charges/ch_1AFpSp2eZvKYlo2CbjUM3DDB/refunds"
+  },
+  "review": null,
+  "shipping": null,
+  "source": {
+    "id": "card_18IjIt2eZvKYlo2Cjy5zdx5B",
+    "object": "card",
+    "address_city": null,
+    "address_country": null,
+    "address_line1": null,
+    "address_line1_check": null,
+    "address_line2": null,
+    "address_state": null,
+    "address_zip": null,
+    "address_zip_check": null,
+    "brand": "Visa",
+    "country": "US",
+    "customer": "cus_8Zt5p6jpFOe6wL",
+    "cvc_check": null,
+    "dynamic_last4": null,
+    "exp_month": 12,
+    "exp_year": 2017,
+    "fingerprint": "Xt5EWLLDS7FJjR1c",
+    "funding": "credit",
+    "last4": "4242",
+    "metadata": {
+    },
+    "name": null,
+    "tokenization_method": null
+  },
+  "source_transfer": null,
+  "statement_descriptor": null,
+  "status": "succeeded",
+  "transfer_group": null
+}           </code></pre>
+                </li>
+               </ul>
+              
+            </div>
+        </div>
+    </div>
+    <!-- Manual Page 6 ends here --> 
+
+    <!-- Manual Page 7 starts here --> 
+       <div class='endpoint_holder post__article endpoint_paginations' id='paginations'>
+        <div class='left_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">Pagination</h3>
+              </div>
+
+              <p>All top-level API resources have support for bulk fetches via "list" API methods. For instance you can list charges, list customers, and list invoices. These list API methods share a common structure, taking at least these three parameters: limit, starting_after, and ending_before.</p>
+
+          <p>Stripe utilizes cursor-based pagination via the starting_after and ending_before parameters. Both take an existing object ID value (see below) and return objects in reverse chronological order. The ending_before parameter returns objects created before the named object. The starting_after parameter returns objects created after the named object. If both parameters are provided, only ending_before is used.</p>
+
+             <table class="uk-table uk-table-divider">
+                          <thead>
+                              <tr>
+                                  <th colspan="2">ARGUMENTS</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              
+                              <tr>
+                                  <td align="right">
+                                     <p style="margin-bottom: 5px;">limit</p>
+                                     <p style="color:#cccccc; margin-top: 5px !important;">optional, default is 10</p>
+                                  </td>
+
+                                  <td><p>A limit on the number of objects to be returned, between 1 and 100.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right">
+                                  <p style="margin-bottom: 5px;">starting_after</p>
+                                  <p style="color:#cccccc; margin-top: 5px !important;">optional</p>
+                                  </td>
+                                  <td><p> A cursor for use in pagination. starting_after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include starting_after=obj_foo in order to fetch the next page of the list.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right">
+                                   <p style="margin-bottom: 5px;">ending_before</p>
+                                   <p style="color:#cccccc; margin-top: 5px !important;">optional</p>
+                                   </td>
+                                  <td><p>A cursor for use in pagination. ending_before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_bar, your subsequent call can include ending_before=obj_bar in order to fetch the previous page of the list.</p></td>
+                              </tr>
+                          </tbody>
+                   </table>
+                   <table class="uk-table uk-table-divider">
+                          <thead>
+                              <tr>
+                                  <th colspan="2">LIST RESPONSE FORMAT</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              
+                              <tr>
+                                  <td align="right">
+                                     <p style="margin-bottom: 5px;">object</p>
+                                     <p style="color:#cccccc; margin-top: 5px !important;">string, value is "list"</p>
+                                  </td>
+
+                                  <td><p>A string describing the object type returned.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right">
+                                  <p style="margin-bottom: 5px;"> data</p>
+                                  <p style="color:#cccccc; margin-top: 5px !important;">array</p>
+                                  </td>
+                                  <td><p>An array containing the actual response elements, paginated by any request parameters.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right">
+                                   <p style="margin-bottom: 5px;">has_more</p>
+                                   <p style="color:#cccccc; margin-top: 5px !important;">boolean</p>
+                                   </td>
+                                  <td><p>Whether or not there are more elements available after this set. If false, this set comprises the end of the list.</p></td>
+                              </tr>
+                              <tr>
+                                  <td align="right">
+                                   <p style="margin-bottom: 5px;">url</p>
+                                   <p style="color:#cccccc; margin-top: 5px !important;">string</p>
+                                   </td>
+                                  <td><p>The URL for accessing this list.</p></td>
+                              </tr>
+                          </tbody>
+                   </table>
+
+                   <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">Auto-pagination</h3>
+                  <p> 
+Most of our libraries support auto-pagination. This feature easily handles fetching large lists of resources without having to manually paginate results and perform subsequent requests.
+                  </p>
+                   <p> 
+To use the auto-pagination feature in Ruby, simply issue an initial "list" call with the parameters you need, then call auto_paging_each on the returned list object to iterate over all objects matching your initial parameters.
+                  </p>
+              </div>
+            </div>
+        </div>
+        <div class='right_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet">Example Request</h5>
+              </div>
+
+               <ul class="uk-subnav uk-subnav-pill" uk-switcher>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Javascript</a></li>
+                  <li><a href="#">Rails</a></li>
+               </ul>
+               <ul class="uk-switcher uk-margin">
+                <li>
+                    <pre><code class="php hljs">\Stripe\Stripe::setApiKey("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+
+\Stripe\Customer::all(array("limit" => 3));
+                       </code></pre>
+                </li>
+                <li>
+                   <pre><code class="javascript hljs">var stripe = require("stripe")(
+  "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+);
+
+stripe.customers.list(
+  { limit: 3 },
+  function(err, customers) {
+    // asynchronously called
+  }
+);</code></pre>
+                </li>
+                <li>
+                  <pre><code class="php hljs">require "stripe"
+Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
+Stripe::Customer.list(limit: 3)
+                       </code></pre>
+                </li>
+               </ul>
+               <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet">Example Request</h5>
+              </div>
+
+               <ul class="uk-subnav uk-subnav-pill" uk-switcher>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Javascript</a></li>
+                  <li><a href="#">Rails</a></li>
+               </ul>
+               <ul class="uk-switcher uk-margin">
+                <li>
+                    <pre><code class="php hljs">Stripe\Collection JSON: {
+  "object" => "list",
+  "url" => "/v1/customers",
+  "has_more" => false,
+  "data" => [
+    [0] => Stripe\Customer JSON: {
+      "id": "cus_Ab1ieuHAOecb5j",
+      "object": "customer",
+      "account_balance": 0,
+      "created": 1493926261,
+      "currency": "usd",
+      "default_source": null,
+      "delinquent": false,
+      "description": "Adam Hayes",
+      "discount": null,
+      "email": null,
+      "livemode": false,
+      "metadata": {
+      },
+      "shipping": null,
+      "sources": {
+        "object": "list",
+        "data": [
+    
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/customers/cus_Ab1ieuHAOecb5j/sources"
+      },
+      "subscriptions": {
+        "object": "list",
+        "data": [
+    
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/customers/cus_Ab1ieuHAOecb5j/subscriptions"
+      }
+    }
+    [1] => <Stripe\Customer[...] ...>
+    [2] => <Stripe\Customer[...] ...>
+  ]
+}
+                       </code></pre>
+                </li>
+                <li>
+                   <pre><code class="javascript hljs">{
+  "object": "list",
+  "url": "/v1/customers",
+  "has_more": false,
+  "data": [
+    {
+      "id": "cus_Ab1jtTavKM5Qju",
+      "object": "customer",
+      "account_balance": 0,
+      "created": 1493926308,
+      "currency": "usd",
+      "default_source": null,
+      "delinquent": false,
+      "description": "Wiley Altenwerth",
+      "discount": null,
+      "email": null,
+      "livemode": false,
+      "metadata": {
+      },
+      "shipping": null,
+      "sources": {
+        "object": "list",
+        "data": [
+    
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/customers/cus_Ab1jtTavKM5Qju/sources"
+      },
+      "subscriptions": {
+        "object": "list",
+        "data": [
+          {
+            "id": "sub_Ab1jdt7grEvkD0",
+            "object": "subscription",
+            "application_fee_percent": null,
+            "cancel_at_period_end": false,
+            "canceled_at": null,
+            "created": 1493926308,
+            "current_period_end": 1496604708,
+            "current_period_start": 1493926308,
+            "customer": "cus_Ab1jtTavKM5Qju",
+            "discount": null,
+            "ended_at": null,
+            "items": {
+              "object": "list",
+              "data": [
+                {
+                  "id": "si_1AFpg02eZvKYlo2CUlBAxR0o",
+                  "object": "subscription_item",
+                  "created": 1493926309,
+                  "plan": {
+                    "id": "free_premium",
+                    "object": "plan",
+                    "amount": 0,
+                    "created": 1493924883,
+                    "currency": "usd",
+                    "interval": "month",
+                    "interval_count": 1,
+                    "livemode": false,
+                    "metadata": {
+                    },
+                    "name": "Premium",
+                    "statement_descriptor": null,
+                    "trial_period_days": null
+                  },
+                  "quantity": 1
+                }
+              ],
+              "has_more": false,
+              "total_count": 1,
+              "url": "/v1/subscription_items?subscription=sub_Ab1jdt7grEvkD0"
+            },
+            "livemode": false,
+            "metadata": {
+            },
+            "plan": {
+              "id": "free_premium",
+              "object": "plan",
+              "amount": 0,
+              "created": 1493924883,
+              "currency": "usd",
+              "interval": "month",
+              "interval_count": 1,
+              "livemode": false,
+              "metadata": {
+              },
+              "name": "Premium",
+              "statement_descriptor": null,
+              "trial_period_days": null
+            },
+            "quantity": 1,
+            "start": 1493926308,
+            "status": "active",
+            "tax_percent": null,
+            "trial_end": null,
+            "trial_start": null
+          }
+        ],
+        "has_more": false,
+        "total_count": 1,
+        "url": "/v1/customers/cus_Ab1jtTavKM5Qju/subscriptions"
+      }
+    },
+    {...},
+    {...}
+  ]
+}</code></pre>
+                </li>
+                <li>
+                  <pre><code class="php hljs">#<Stripe::ListObject:0x3fe634d74498> JSON: {
+  "object": "list",
+  "url": "/v1/customers",
+  "has_more": false,
+  "data": [
+    #<Stripe::Customer id=cus_Ab1kSfRtEv0efG 0x00000a> JSON: {
+      "id": "cus_Ab1kSfRtEv0efG",
+      "object": "customer",
+      "account_balance": 0,
+      "created": 1493926343,
+      "currency": "usd",
+      "default_source": null,
+      "delinquent": false,
+      "description": "Marcel Botsford",
+      "discount": null,
+      "email": null,
+      "livemode": false,
+      "metadata": {
+      },
+      "shipping": null,
+      "sources": {
+        "object": "list",
+        "data": [
+    
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/customers/cus_Ab1kSfRtEv0efG/sources"
+      },
+      "subscriptions": {
+        "object": "list",
+        "data": [
+    
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/customers/cus_Ab1kSfRtEv0efG/subscriptions"
+      }
+    },
+    #<Stripe::Customer[...] ...>,
+    #<Stripe::Customer[...] ...>
+  ]
+}</code></pre>
+                </li>
+               </ul>
+
+               <ul class="uk-subnav uk-subnav-pill" uk-switcher>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Javascript</a></li>
+                  <li><a href="#">Rails</a></li>
+               </ul>
+               <ul class="uk-switcher uk-margin">
+                <li>
+                    <pre><code class="php hljs">\Stripe\Stripe::setApiKey("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+
+$customers = \Stripe\Customer::all(array("limit" => 3));
+foreach ($customers->autoPagingIterator() as $customer) {
+  // Do something with $customer
+}
+                       </code></pre>
+                </li>
+                <li>
+                   <pre><code class="javascript hljs">var stripe = require("stripe")(
+  "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+);
+
+// Support for this directly in Stripe's Node library is forthcoming.</code></pre>
+                </li>
+                <li>
+                  <pre><code class="php hljs">require "stripe"
+Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
+customers = Stripe::Customer.all(:limit => 3)
+customers.auto_paging_each do |customer|
+  # Do something with customer
+end
+                       </code></pre>
+                </li>
+               </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Manual Page 7 ends here --> 
+    <!-- Manual Page 8 starts here --> 
+       <div class='endpoint_holder post__article endpoint_requestids' id='requestids'>
+        <div class='left_part'>
+            <div class='uk-container'>
+              
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">Request IDs</h3>
+              </div>
+
+              <p>Each API request has an associated request identifier. You can find this value in the response headers, under Request-Id. You can also find request identifiers in the URLs of individual request logs in your Dashboard. If you need to contact us about a specific request, providing the request identifier will ensure the fastest possible resolution.</p>
+
+            </div>
+        </div>
+        <div class='right_part'>
+            <div class='uk-container'>
+              
+            </div>
+        </div>
+    </div>
+    <!-- Manual Page 8 ends here --> 
+
+    <!-- Manual Page 9 starts here --> 
+       <div class='endpoint_holder post__article endpoint_versioning' id='versioning'>
+        <div class='left_part'>
+            <div class='uk-container'>
+              
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h3 class="uk-heading-bullet">Versioning</h3>
+              </div>
+
+              <p>When we make backwards-incompatible changes to the API, we release new, dated versions. The current version is 2017-04-06. Read our API upgrades guide to see our API changelog and to learn more about backwards compatibility.</p>
+              <p>All requests will use your account API settings, unless you override the API version. The changelog lists every available version. Note that events generated by API requests will always be structured according to your account API version.</p>
+              <p>To override the API version, assign the version to the Stripe.api_version property.</p>
+              <p>You can visit your Dashboard to upgrade your API version. As a precaution, use API versioning to test a new API version before committing to an upgrade.</p>
+
+            </div>
+        </div>
+        <div class='right_part'>
+            <div class='uk-container'>
+              <div class="uk-tile uk-tile-muted uk-padding-remove">
+                  <h5 class="uk-heading-bullet">Example Request</h5>
+              </div>
+
+               <ul class="uk-subnav uk-subnav-pill" uk-switcher>
+                  <li><a href="#">PHP</a></li>
+                  <li><a href="#">Javascript</a></li>
+                  <li><a href="#">Rails</a></li>
+               </ul>
+               <ul class="uk-switcher uk-margin">
+                <li>
+                    <pre><code class="php hljs">\Stripe\Stripe::setApiKey("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+\Stripe\Stripe::setApiVersion("2017-04-06");
+                       </code></pre>
+                </li>
+                <li>
+                   <pre><code class="javascript hljs">var stripe = require("stripe")(
+  "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+);
+stripe.setApiVersion('2017-04-06');</code></pre>
+                </li>
+                <li>
+                  <pre><code class="php hljs">require "stripe"
+Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+Stripe.api_version = "2017-04-06"
+                       </code></pre>
+                </li>
+               </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Manual Page 9 ends here --> 
+
+
+     <?php 
+     
+         $full_cats = $RAML->getChildPaths('/');
+         sort($full_cats);
+         $count_full_cats = count($full_cats);
+
+          for ($i = 0; $i < $count_full_cats; $i++)
+          {
+            $menu_item = GetBetween("/","/", $full_cats[$i]);
+            $main_cats[$menu_item][] = $full_cats[$i];    
+          }
+     
+         $final_cats =  json_encode($main_cats);
+         $html = "";
+
+         $endpoint_nr = 0;
+         foreach($full_cats as $endpoint => $resource) {
+            
+            $endpoint_nr++;
+
+            $RAML->setCurrentPath($resource); 
+            $current_path =  $RAML->baseUri . $RAML->getCurrentPath();
+            $desc = $RAML->path()->description;
+          
+            $sub_cats_final = str_replace('/', '', $resource);
+
+  
+           $html .= "<div class='endpoint_holder post__article endpoint_$endpoint_nr' id='$sub_cats_final'>";
+
+
+
+           $html .= "<div class='left_part'>";
+           $html .= "<div class='uk-container'>";
+
+           $html .= "<h5 class='uk-heading-bullet'><b>".$current_path."</b></h5>";
+           $html .= "<div class='uk-placeholder'>".$desc."</div>";
+           $html .= '<div class="uk-tile uk-tile-muted uk-padding-remove"><h3 class="uk-heading-bullet">Available Actions</h3></div>';
+
+                $verbs = "<ul class='uk-subnav uk-subnav-pill' uk-switcher>";
+                            $verb_count = 0;
+                            foreach ($RAML->path()->getVerbs() as $verb){ 
+                             $verb_count++;
+                             $verbs .= "<li><a href='#'' class='verb_name' id='$verb_count'>".$verb."</a></li>";
+               
+                              }
+                $verbs .="</ul>";
+           
+           $html .= $verbs;
+
+           $verb_content = "<ul class='uk-switcher uk-margin'>";
+                    foreach ($RAML->path()->getVerbs() as $verb_con) { 
+                      $description = RAML2HTML\markdown::clean($RAML->path()->get($verb_con)->get('description'));
+                      $verb_content .= "<li><div class='uk-placeholder'>".$description."</div>";
+                      
+                       if ($RAML->action()->get('queryParameters')->isArray()):
+                    
+     $verb_content .= "<table class='uk-table uk-table-striped'><caption><h3 class='uk-heading-bullet'>Query Parameters</h3></caption>";
+     $verb_content .= "<thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>";
+     foreach ($RAML->action()->get('queryParameters')->toArray() as $param => $details) {
+     
+     $required = (isset($details['required']) && $details['required'] == 1 ? 'Yes' : '');
+   
+     if (isset($details['example'])) {
+      $example_final = "<span style='display: block; margin: 6px 0 8px 0; border-top: 1px solid #aaa; color: #666; padding: 4px; font-size: 10px;''><b>Example:</b>".$details['example'].'</span>';
+     }else { $example_final = " ";}
+
+     if (isset($details['type'])) { $type = $details['type']; } else { $type = " "; }
+     if (isset($details['description'])) { $desc_details = $details['description']; } else { $desc_details = " "; }
+
+
+     $verb_content.="<tr><td>".$param."</td><td>".$type."</td><td>".$required."</td><td>{{ needs a fix }}</span>".$example_final."</td></tr>";
+  }
+  $verb_content .= "</table>";
+
+     endif;
+                      
+                      $verb_content .=  "</li>";
+
+                    }
+           $verb_content .= "</ul>"; 
+           $html .= $verb_content; 
+           $html .= "</div>";
+           $html .= "</div>";
+
+           $html .= "<div class='right_part'>";
+           $html .= "<div class='uk-container' style='position: relative; overflow:hidden;'>";
+        
+           $verb_content = '<div class="uk-tile uk-tile-muted uk-padding-remove"><h3 class="uk-heading-bullet" style="margin-bottom:20px !important;">Code Samples</h4></div>';
+            $verb_content .= "<ul class='code_sample_holder'>";
+
+                    $verb_content_count = 0;
+                    foreach ($RAML->path()->getVerbs() as $verb_con) { 
+                      $verb_content_count++;
+                      $RAML->setCurrentAction($verb_con);
+
+                      $id_ext = $sub_cats_final."_".$verb_content_count;
+                      $description = RAML2HTML\markdown::clean($RAML->path()->get($verb_con)->get('description'));
+                      
+                       if($verb_content_count == 1)
+                       {
+                        $codeSamples = new RAML2HTML\codeSamples($RAML);
+                         $verb_content .= "<li style='color:#ffffff' class='show_code code' id='code_holder_$id_ext'>";
+
+                           $js_code = str_replace("\n", "<br />", $codeSamples->javascript());
+                           $php_code = str_replace("\n", "<br />", $codeSamples->php());
+                           $rails_code = str_replace("\n", "<br />", $codeSamples->rails());
+
+                            $verb_content .= "<ul class='uk-subnav uk-subnav-pill' uk-switcher>";
+                            $verb_content .= "<li><a href='#''> PHP </a></li>";
+                            $verb_content .= "<li><a href='#''> JavaScript </a></li>";
+                            $verb_content .= "<li><a href='#''> Rails </a></li>";
+                            $verb_content .= "</ul>";
+                         
+
+                          $verb_content .= "<ul class='uk-switcher uk-margin'>";
+                          $verb_content .= "<li><pre><code class='php hljs'>".$php_code."</code></pre></li>";
+                          $verb_content .= "<li><pre><code class='javascript hljs'>".$js_code."</code></pre></li>";
+                          $verb_content .= "<li><pre><code class='php hljs'>".$rails_code."</code></pre></li>";
+                          $verb_content .= "</ul>";
+                          $verb_content .= "</li>";
+                       }
+                       else
+                       {   
+                           $codeSamples = new RAML2HTML\codeSamples($RAML);
+                           $verb_content .= "<li style='color:#ffffff' class='hide_code code' id='code_holder_$id_ext'>";
+
+                           $js_code = str_replace("\n", "<br />", $codeSamples->javascript());
+                           $php_code = str_replace("\n", "<br />", $codeSamples->php());
+                           $rails_code = str_replace("\n", "<br />", $codeSamples->rails());
+
+                            $verb_content .= "<ul class='uk-subnav uk-subnav-pill' uk-switcher>";
+                            $verb_content .= "<li><a href='#''> PHP </a></li>";
+                            $verb_content .= "<li><a href='#''> JavaScript </a></li>";
+                            $verb_content .= "<li><a href='#''> Rails </a></li>";
+                            $verb_content .= "</ul>";
+                         
+
+                           $verb_content .= "<ul class='uk-switcher uk-margin'>";
+                           $verb_content .= "<li><pre><code class='php hljs'>".$php_code."</code></pre></li>";
+                          $verb_content .= "<li><pre><code class='javascript hljs'>".$js_code."</code></pre></li>";
+                          $verb_content .= "<li><pre><code class='php hljs'>".$rails_code."</code></pre></li>";
+                          $verb_content .= "</ul>";
+                          $verb_content .= "</li>";
+                       }
+
+                       
+
+                                       
+                    }
+
+                     //** JSON Response starts here  **///
+    $verb_content .= '<div class="uk-tile uk-tile-muted uk-padding-remove"><h3 class="uk-heading-bullet" style="margin-bottom:20px !important;">Response</h3></div>';  
+
+   foreach ($RAML->path()->getResponses() as $code => $responses) 
+   {
+      $verb_content .= $code;
+      foreach ($responses as $response) {
+         if (in_array($response['type'], array('example', 'schema'))) {
+        continue;
+      }
+
+     $verb_content .= ': <span class="responseText">' . (is_array($response['type']) ? array_shift($response['type']) : $response['type']) . '</span>';
+
+     if (isset($response['example'])):
+       
+       $verb_content .= "<pre><code class='json hljs'>".$response['example']."</code></pre>";
+
+      endif;
+
+      }
+   }
+   //** JSON Response ends here **///
+           $verb_content .= "</ul>";  
+           $html .= $verb_content;
+              
+           $html .= "</div>";
+           $html .= "</div>";
+
+           $html .= "</div>";
+          
+          
+          }
+
+         echo $html;
+     ?>  
+
+
+    </div>
+  </div>
+
+</body>
+
+</html>
+
+

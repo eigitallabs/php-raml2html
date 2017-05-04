@@ -1,0 +1,103 @@
+#%RAML 1.0
+title: ePaisa
+version: 2.0
+baseUri: http://nine.epaisa.com
+/user/role:
+  get:
+    description: It fetch list of all roles
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json array example
+        type:
+        example:  | 
+         {
+          merchantId: "345"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success":1,
+                "response":{
+                "Roles":[
+                {
+                "roleId":1,
+                "merchantId":"0",
+                "roleName":"Super Admin1"
+                },
+                {
+                "roleId":2,
+                "merchantId":"0",
+                "roleName":"Merchant Admin"
+                },
+                {
+                "roleId":3,
+                "merchantId":"0",
+                "roleName":"Merchant Admin (Approved)"
+                },
+                {
+                "roleId":4,
+                "merchantId":"0",
+                "roleName":"Merchant User"
+                },
+                {
+                "roleId":5,
+                "merchantId":"0",
+                "roleName":"Customer1"
+                },
+                {
+                "roleId":6,
+                "merchantId":"0",
+                "roleName":"Account Manager"
+                },
+                {
+                "roleId":7,
+                "merchantId":"0",
+                "roleName":"Assassin"
+                },
+                ]
+                }
+                }
+                
+  post:
+    description: It will save new role
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json array example
+        type:
+        example:  | 
+         {
+           roleId':"",
+          merchantId: "345",
+          roleName:"fd"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "success":1,
+              "response":{
+              "merchantId":0,
+              "roleName":"fd",
+              "created_at":1482820349,
+              "updated_at":1482820349,
+              "createdUserId":455,
+              "roleId":69
+              }
+              }

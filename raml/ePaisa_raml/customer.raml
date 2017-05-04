@@ -1,0 +1,670 @@
+#%RAML 0.8
+title: ePaisa
+version: 2.0
+baseUri: http://nine.epaisa.com
+/customer/list(deprecated):
+  description: It fetch list of all customers 
+  post:
+    description: It fetch list of all customers 
+    queryParameters:
+      param1:
+          required: true
+          displayName: Token
+          description: Access token generated from login call on /user/login
+      param2:
+          required: true
+          displayName: data (json)
+          description: json array example
+    body:
+      application/json:
+        example: |
+          {
+            "merchantId": "345"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "response": {
+                "Customer": [
+                {
+                "customerId": 2,
+                "firstName": "vinit",
+                "lastName": "choudhari",
+                "phoneNumber": "+918793252893",
+                "email": "",
+                "rewardPoints": null,
+                "creditLimit": "5000.00",
+                "currentBalance": "3000.00",
+                "pincode": null,
+                "address1": "",
+                "address2": "",
+                "cityId": null,
+                "stateId": null,
+                "countryCode": null
+                }
+                ]
+                }
+                }
+/customer/add(deprecated):
+  description: This api will add new customer in customer table
+  post:
+    description: This api will add new customer in customer table
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json  example phoneNumber , firstName & lastName required Key
+        type:
+    body:
+      application/json:
+        example: |
+         {
+            "phoneNumber": "+918793252893",
+            "firstName": "vinit",
+            "lastName": "choudhari",
+            "email": "choudhari@gmail.com",
+            "address1": "some address line 1",
+            "address2": "some address line 2",
+            "pincode": 87534756,
+            "cityId": 23,
+            "stateId": 434,
+            "countryCode": "IN",
+            "dob": "dateofbirth"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "response": {
+                  "Customer": {
+                    "customerId": 2,
+                    "firstName": "vinit",
+                    "lastName": "choudhari",
+                    "email": "",
+                    "phoneNumber": "+918793252893",
+                    "password_hash": null,
+                    "otp": "",
+                    "dob": null,
+                    "address1": "some address line 1",
+                    "address2": "some address line 2",
+                    "pincode": 87534756,
+                    "cityId": 23,
+                    "stateId": 434,
+                    "countryCode": "IN",
+                    "created_at": 1479541253,
+                    "updated_at": 1479541254,
+                    "createdUserId": 455,
+                    "updatedUserId": 455,
+                    "status": 1
+                  }
+                }
+              }
+/customer/delete(deprecated):
+  description: This api will delete customer from merchant customer list
+  delete:
+    description: This api will delete customer from merchant customer list
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json  example customerId required Key
+        type:
+    body:
+      application/json:
+        example: |
+          {
+            "customerId": 2
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "response": "Customers deleted successfully."
+              }
+/customer/details(deprecated):
+  description: This api will add new customer details in customerDetail table
+  post:
+    description: This api will add new customer details in customerDetail table
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json array example phoneNumber , firstName & lastName required Key
+        type:
+    body:
+      application/json:
+        example: |
+         {
+            "customerId": 123,
+            "params": [
+              {"paramName":"Foo","paramValue":"Bar"},
+              {"paramName":"Foo","paramValue":"Bar"},
+              {"paramName":"Foo","paramValue":"Bar"},
+              {"paramName":"Foo","paramValue":"Bar"}
+            ]
+         }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "message": "parameters are store successfully."
+              }
+  put:
+    description: This api will edit a customer details in customerDetail table
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json array example phoneNumber , firstName & lastName required Key
+        type:
+    body:
+      application/json:
+        example: |
+          {
+            "customerId": 123,
+            "customerDetailId": 54
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "message": "parameters are store successfully.",
+                "messageDetails": []
+              }
+  delete:
+    description: This api will delete a customer details in customerDetail table
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json array example phoneNumber , firstName & lastName required Key
+        type:
+    body:
+      application/json:
+        example: |
+          {
+            "customerId": 123,
+            "customerDetailId": 54
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "response": []
+              }
+/customer:
+  description: This api will add new customer 
+  get:
+    description: It fetch list of all customers 
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json array example phoneNumber , firstName & lastName required Key
+            <p><b><i>customerId</i></b> - customer's id. <i>Optional</i></p>
+        type:
+    body:
+      application/json:
+        example: |
+          {
+            "customerId": 12
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "response": {
+                  "Customer": [
+                    {
+                      "firstName": "Satish1",
+                      "lastName": "Charmal1",
+                      "email": "sat**************@gmail.com",
+                      "phoneNumber": "98****5971",
+                      "address1": "",
+                      "address2": "",
+                      "cityId": 0,
+                      "stateId": 0,
+                      "countryCode": 0,
+                      "pincode": 0,
+                      "status": 0
+                    },
+                    {
+                      "firstName": "Satish2",
+                      "lastName": "Charmal2",
+                      "email": "satishcharmal1432@gmail.com",
+                      "phoneNumber": "9867585972",
+                      "address1": "Padhegaon",
+                      "address2": "Kopargaon",
+                      "cityId": null,
+                      "stateId": null,
+                      "countryCode": null,
+                      "pincode": null,
+                      "status": 1
+                    },
+                    {
+                      "firstName": "Satish3",
+                      "lastName": "Charmal3",
+                      "email": "satishcharmal1433@gmail.com",
+                      "phoneNumber": "9867585973",
+                      "address1": "Padhegaon",
+                      "address2": "Kopargaon",
+                      "cityId": null,
+                      "stateId": null,
+                      "countryCode": null,
+                      "pincode": null,
+                      "status": 1
+                    },
+                    {
+                      "firstName": "Satish4",
+                      "lastName": "Charmal4",
+                      "email": "sat**************@gmail.com",
+                      "phoneNumber": "98****5974",
+                      "address1": "",
+                      "address2": "",
+                      "cityId": 0,
+                      "stateId": 0,
+                      "countryCode": 0,
+                      "pincode": 0,
+                      "status": 0
+                    },
+                    {
+                      "firstName": "Satish5",
+                      "lastName": "Charmal5",
+                      "email": "satishcharmal1435@gmail.com",
+                      "phoneNumber": "9867585975",
+                      "address1": "Padhegaon",
+                      "address2": "Kopargaon",
+                      "cityId": null,
+                      "stateId": null,
+                      "countryCode": null,
+                      "pincode": null,
+                      "status": 1
+                    }
+                  ]
+                }
+              }
+  put:
+    description: This api will edit a customer details in customerDetail table
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json array example phoneNumber , firstName & lastName required Key
+            <p><b><i>customerId</i></b> - customer's unique id.</p>
+            <p><b><i>phoneNumber</i></b> - customer's phone number.</p>
+            <p><b><i>email</i></b> - customer's email address.</p>
+            <p><b><i>customerHandler</i></b> - customer's handler. <b>optional</b></p>
+            <p><b><i>firstName</i></b> - customer's first name.</p>
+            <p><b><i>lastName</i></b> - customer's lasy name.</p>
+            <p><b><i>address1</i></b> - customer's address line 1.<b>optional</b></p>
+            <p><b><i>address2</i></b> - customer's address line 2.<b>optional</b></p>
+            <p><b><i>pincode</i></b> - customer's pincode.<b>optional</b></p>
+            <p><b><i>cityId</i></b> - city id.<b>optional</b></p>
+            <p><b><i>stateId</i></b> - sate id.<b>optional</b></p>
+            <p><b><i>countryCode</i></b> - 2 char country code.<b>optional</b></p>
+            <p><b><i>dob</i></b> - date of birth in format of Y-m-d.<b>optional</b></p>
+            <p><b><i>customerDetails</i></b> - an array of arrays of paramName/paramValue.<b>optional</b></p>
+            <p><b><i>linkCustomer</i></b> - boolean value to link customer with merchant imidiatly or you want to do it later. default is true</p>
+        type:
+    body:
+      application/json:
+        example: |
+         {
+            "phoneNumber": "+918793252893",
+            "firstName": "vinit",
+            "lastName": "choudhari",
+            "email": "choudhari@gmail.com",
+            "address1": "some address line 1",
+            "address2": "some address line 2",
+            "pincode": "87534756",
+            "cityId": 23,
+            "stateId": 434,
+            "countryCode": "IN",
+            "dob": "1985-10-20",
+            "linkCustomer": false,
+            "customerDetails": [
+                {
+                    "paramName": "Foo1",
+                    "paramValue": "Bar"
+                },
+                {
+                    "paramName": "Foo2",
+                    "paramValue": "Bar"
+                },
+                {
+                    "paramName": "Foo3",
+                    "paramValue": "Bar"
+                },
+                {
+                    "paramName": "Foo4",
+                    "paramValue": "Bar"
+                }
+            ]
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "response": {
+                    "customerId": 30809,
+                    "firstName": "vinit",
+                    "lastName": "choudhari",
+                    "email": "choudhari@gmail.com",
+                    "phoneNumber": "+918793252893",
+                    "password_hash": null,
+                    "otp": "cde129a5d0a08298cd3ae8077e530b89",
+                    "dob": "1985-10-20",
+                    "address1": "some address line 1",
+                    "address2": "some address line 2",
+                    "created_at": 1486620850,
+                    "updated_at": 1486620904,
+                    "createdUserId": 459,
+                    "updatedUserId": 459,
+                    "status": 1,
+                    "cityId": 23,
+                    "stateId": 434,
+                    "pincode": "87534756",
+                    "countryCode": "IN",
+                    "customerDetails": [
+                        {
+                            "customerDetailId": 85,
+                            "customerId": 30809,
+                            "paramName": "Foo1",
+                            "paramValue": "Bar",
+                            "sourceId": 7,
+                            "status": 1,
+                            "created_at": 1486620850,
+                            "updated_at": 1486620850,
+                            "createdUserId": 459,
+                            "updatedUserId": 459,
+                            "merchantId": 466
+                        },
+                        {
+                            "customerDetailId": 86,
+                            "customerId": 30809,
+                            "paramName": "Foo2",
+                            "paramValue": "Bar",
+                            "sourceId": 7,
+                            "status": 1,
+                            "created_at": 1486620850,
+                            "updated_at": 1486620850,
+                            "createdUserId": 459,
+                            "updatedUserId": 459,
+                            "merchantId": 466
+                        },
+                        {
+                            "customerDetailId": 87,
+                            "customerId": 30809,
+                            "paramName": "Foo3",
+                            "paramValue": "Bar",
+                            "sourceId": 7,
+                            "status": 1,
+                            "created_at": 1486620850,
+                            "updated_at": 1486620850,
+                            "createdUserId": 459,
+                            "updatedUserId": 459,
+                            "merchantId": 466
+                        },
+                        {
+                            "customerDetailId": 88,
+                            "customerId": 30809,
+                            "paramName": "Foo4",
+                            "paramValue": "Bar",
+                            "sourceId": 7,
+                            "status": 1,
+                            "created_at": 1486620850,
+                            "updated_at": 1486620850,
+                            "createdUserId": 459,
+                            "updatedUserId": 459,
+                            "merchantId": 466
+                        }
+                    ],
+                    "customerPoint": {
+                        "customerPointsId": 121,
+                        "customerId": 30809,
+                        "merchantId": 466,
+                        "rewardPoints": null,
+                        "pointsExpiry": 0,
+                        "created_at": 1486620850,
+                        "updated_at": 1486620850,
+                        "createdUserId": 459,
+                        "updatedUserId": 459,
+                        "status": 1,
+                        "creditLimit": "0.00",
+                        "currentBalance": "0.00",
+                        "customerHandler": ""
+                    }
+                }
+              }
+  delete:
+    description: This api will delete customer from merchant customer list
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json  example customerId required Key
+            <p><b><i>IMEI</i></b> - generated imei value of the client. <u>Optional</u></p>
+            <p><b><i>customerId</i></b> - this id is used for deleting customer or its details only</p>
+            <p><b><i>customerDetails</i></b> - if you set this parameter we do not remove customer itself we just remove customer details this parameter is an array of [paramName:"someName",paramValue:"someValue"]. <u>Optional</u></p>
+        type:
+    body:
+      application/json:
+        example: |
+          {
+            "customerId": 2
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "response": "Customers deleted successfully."
+              }
+/customer/search:
+  description: It fetch list of all customers 
+  get:
+    description: It fetch list of all customers 
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json array example
+        type:
+    body:
+      application/json:
+        example: |
+          {
+            "name": "satish"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "response": {
+                  "Customer": [
+                    {
+                      "firstName": "Satish1",
+                      "lastName": "Charmal1",
+                      "email": "sat**************@gmail.com",
+                      "phoneNumber": "98****5971",
+                      "address1": "",
+                      "address2": "",
+                      "cityId": 0,
+                      "stateId": 0,
+                      "countryCode": 0,
+                      "pincode": 0,
+                      "status": 0
+                    },
+                    {
+                      "firstName": "Satish2",
+                      "lastName": "Charmal2",
+                      "email": "satishcharmal1432@gmail.com",
+                      "phoneNumber": "9867585972",
+                      "address1": "Padhegaon",
+                      "address2": "Kopargaon",
+                      "cityId": null,
+                      "stateId": null,
+                      "countryCode": null,
+                      "pincode": null,
+                      "status": 1
+                    },
+                    {
+                      "firstName": "Satish3",
+                      "lastName": "Charmal3",
+                      "email": "satishcharmal1433@gmail.com",
+                      "phoneNumber": "9867585973",
+                      "address1": "Padhegaon",
+                      "address2": "Kopargaon",
+                      "cityId": null,
+                      "stateId": null,
+                      "countryCode": null,
+                      "pincode": null,
+                      "status": 1
+                    },
+                    {
+                      "firstName": "Satish4",
+                      "lastName": "Charmal4",
+                      "email": "sat**************@gmail.com",
+                      "phoneNumber": "98****5974",
+                      "address1": "",
+                      "address2": "",
+                      "cityId": 0,
+                      "stateId": 0,
+                      "countryCode": 0,
+                      "pincode": 0,
+                      "status": 0
+                    },
+                    {
+                      "firstName": "Satish5",
+                      "lastName": "Charmal5",
+                      "email": "satishcharmal1435@gmail.com",
+                      "phoneNumber": "9867585975",
+                      "address1": "Padhegaon",
+                      "address2": "Kopargaon",
+                      "cityId": null,
+                      "stateId": null,
+                      "countryCode": null,
+                      "pincode": null,
+                      "status": 1
+                    }
+                  ]
+                }
+              }
+/customer/validate:
+  description: This api will validate customer OTP and link that customer to merchant
+  post:
+    description: This api will validate customer OTP and link that customer to merchant account
+    queryParameters:
+      param1:
+        required: true
+        displayName: Token
+        description: Access token generated from login call on /user/login
+      param2:
+        required: true
+        displayName: data (json)
+        description: json array example customerId & otp required Key
+        type:
+    body:
+      application/json:
+        example: |
+          {
+            "customerId": 2,
+            "otp": 416883
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "success": 1,
+                "response": {
+                  "Customer": {
+                    "customerId": 2,
+                    "firstName": "vinit",
+                    "lastName": "choudhari",
+                    "email": "",
+                    "phoneNumber": "+918793252893",
+                    "password_hash": null,
+                    "otp": "",
+                    "dob": null,
+                    "address1": "some address line 1",
+                    "address2": "some address line 2",
+                    "pincode": 87534756,
+                    "cityId": 23,
+                    "stateId": 434,
+                    "countryCode": "IN",
+                    "created_at": 1479541253,
+                    "updated_at": 1479541254,
+                    "createdUserId": 455,
+                    "updatedUserId": 455,
+                    "status": 1
+                  }
+                }
+              }

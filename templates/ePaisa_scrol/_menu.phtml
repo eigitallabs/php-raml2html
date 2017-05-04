@@ -1,0 +1,60 @@
+<?php 
+ 
+    
+    
+
+    /* Build the menu */
+     $final_cats =  json_encode($main_cats);
+   
+    $html  = "<div class='uk-width-1-2@s uk-width-1-1@m uk-margin-right' style='float:right; margin-bottom: 12px !important;'>";
+    $html .= "<ul class='uk-nav-default uk-nav-parent-icon' uk-nav>";
+    $html .= "<span class='menu_title'>INTRODUCTION</span>"; 
+    $html .= "<li><a href='#introduction' id='introductionmenu' class='endpoint'> Introduction </a></li>";
+    $html .= "<ul>";
+    $html .= "</div>";
+
+    $html .= "<div class='uk-width-1-2@s uk-width-1-1@m uk-margin-right' style='float:right; margin-bottom: 12px !important;'>";
+    $html .= "<ul class='uk-nav-default uk-nav-parent-icon' uk-nav>";
+    $html .= "<span class='menu_title'>TOPICS</span>"; 
+    $html .= "<li><a href='#authentication' id='authenticationmenu' class='endpoint'> Authentication </a></li>";
+      $html .= "<li class='uk-parent'><a href='#'>Errors</a>";
+      $html .= "<ul class='uk-nav-sub'>";
+       $html .= "<li><a href='#handlingerrors' id='handlingerrorsmenu' class='endpoint'> Handling errors </a></li>";
+       $html .= "</ul>";
+      $html .= "</li>";
+    $html .= "<li><a href='#expandingobjects' id='expandingobjectsmenu' class='endpoint'>Expanding Objects</a></li>";
+    $html .= "<li><a href='#idempotentrequests' id='idempotentrequestsmenu' class='endpoint'>Idempotent Requests</a></li>";
+    $html .= "<li><a href='#metadata' id='metadatamenu' class='endpoint'>Metadata</a></li>";
+    $html .= "<li><a href='#paginations' id='paginationsmenu' class='endpoint'>Pagination</a></li>";
+    $html .= "<li><a href='#requestids' id='requestidsmenu' class='endpoint'>Request IDs</a></li>";
+    $html .= "<li><a href='#versioning' id='versioningmenu' class='endpoint'>Versioning</a></li>";
+    $html .= "<ul>";
+    $html .= "</div>";
+
+    echo $html;
+    
+    echo "<div class='uk-width-1-2@s uk-width-1-1@m uk-margin-right' style='float:right; margin-bottom: 12px !important;'><ul class='uk-nav-default uk-nav-parent-icon' uk-nav>";
+   
+   echo  "<span class='menu_title'>Endpoints</span>"; 
+
+    foreach($main_cats as $cat => $subcats) {
+
+    	echo "<li class='uk-parent'><a href='#'>".$cat."</a><ul class='uk-nav-sub'>";
+            
+            foreach($subcats as $sub_cat => $sub_cat_val)
+            {
+                $sub_cats_final = str_replace('/', '', $sub_cat_val);
+
+             echo "<li><a href=#".$sub_cats_final." id=".$sub_cats_final."menu"." class='endpoint'>".$sub_cat_val."</a></li>";
+            
+            }
+    	echo "</ul></li>";
+     }
+
+echo "</ul></div>";
+
+  ?>
+
+
+
+

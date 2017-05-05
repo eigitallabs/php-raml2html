@@ -46,3 +46,7 @@ fabric.properties
 
 /tmp
 /vendor
+.idea/
+composer.lock
+inc/tmp/
+raml/epaisa.raml

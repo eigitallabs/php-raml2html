@@ -1415,9 +1415,10 @@ Stripe.api_version = "2017-04-06"
 
      if (isset($details['type'])) { $type = $details['type']; } else { $type = " "; }
      if (isset($details['description'])) { $desc_details = $details['description']; } else { $desc_details = " "; }
+     if (isset($details['displayName'])) { $paramName = $details['displayName']; } else { $paramName = $param; }
 
 
-     $verb_content.="<tr><td>".$param."</td><td>".$type."</td><td>".$required."</td><td>{{ needs a fix }}</span>".$example_final."</td></tr>";
+     $verb_content.="<tr><td>".$paramName."</td><td>".$type."</td><td>".$required."</td><td>{{ needs a fix }}</span>".$example_final."</td></tr>";
   }
   $verb_content .= "</table>";
 

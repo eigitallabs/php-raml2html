@@ -12,6 +12,9 @@ use phpFastCache\CacheManager;
 require __DIR__ . '/vendor/autoload.php';
 
 $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+CacheManager::setDefaultConfig([
+    "path" => __DIR__.'/tmp', // or in windows "C:/tmp/"
+]);
 $InstanceCache = CacheManager::getInstance('files');
 $CachedString = $InstanceCache->getItem('HTML' . md5($url));
 if (is_null($CachedString->get())) {

@@ -24,7 +24,7 @@ $RAMLsource = "raml/api.raml";
 $RAMLactionVerbs = array('get', 'post', 'put', 'patch', 'delete', 'connect', 'trace');
 
 // APC Cache Time Limit - set to "0" to disable
-$cacheTimeLimit = '0';
+$cacheTimeLimit = '3600';
 
 // Path to the theme file for the docs
 //$docsTheme = 'templates/epaisa/index.phtml';
